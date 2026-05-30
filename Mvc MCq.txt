@@ -1,0 +1,83 @@
+advanrtage does mvs offder obver traditional web development
+
+asp .net is a paer t pof which lkarger framework
+
+what kind of pattern is mvc cnsidererd to be?
+
+which method in the controller returns a view in asp .net mvc?
+
+in asp .nmet mvc what doess the controller primarily do?
+
+
+which part of MVC is responsible for rendering user interface? 
+
+what is the lifecycle sequence of mvc request??
+
+which file in asp net defines the routing configuration
+
+
+what is a main purpose of controller in mvc?
+
+which class do all controller in asp net mvc inherit from??
+
+how are actions in mvc net defined?
+
+
+which attribute is used to restrict an action method to http post request?
+
+
+what does the action result class represent in asp net mvc??
+
+how do you pass a data from, controller to a view in asp .net mvc?
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+
+Q- how do you pass a data from, controller to a view in asp .net mvc?
+
+Q- A controller returns an incorrect view, What could be possible issue?
+
+Q- How dio you indicatre razor syntax in a .cshtml file
+
+Q- which file extension is used foor razor views in asp .net mvc?
+
+Q- how is a razor layout page defined? 
+
+Q- Razor syntax shown plain text instead of executing code why??
+
+Q- What is the primary purpose of model in mvc?
+
+Q- what is the primary purpose of html helpers in asp
+
+Q- what is thge role of data annotations in asp net
+
+Q- what doews the required attriubut inforce in a model
+
+Q- how do you create a textbox usinf html helpers
+
+Q- what dpes thje actiuon result class represemnt ion asp net mvc
+
+
+Q- What is model binding in asp net mvc
+
+Q- How do you validate a model in controller action?
+
+Q- what is the purpose of routinbg in asp net mvc
+
+Q- Which fikle is used to define routing configuruation in asp .net mvc
+
+Q- What is model binding in asp net
+
+Q- which attribute is used to restrict an action method to http post request?
+
+Q- what is the pur\pose of model validation in ASP,net Mvc
+Q- which namsespace required for data annotation in ASP.net
+Q- what is a main purpose of controller in mvc?
+
+
+
+
+
+
