@@ -1,0 +1,177 @@
+Step 1
+-----------
+Install Microsoft.Data.SqlClient Library Using Nuget Package
+
+Step 2 Code On Top Of Home Controller
+--------------------------------------------------
+using Microsoft.Data;
+using Microsoft.Data.SqlClient;
+----------------------------------------------
+Step 3 Code In Employee.cs File
+-----------------------------------------
+ public class Employee
+ {
+     public int Eno { get; set; }
+     [Required]
+     public string Ename { get; set; }
+     public DateTime Doj { get; set; }
+     public int Sal { get; set; }
+ }
+
+Step 4 Code In Home Controller
+----------------------------------------
+public class HomeController : Controller
+{
+    SqlConnection db;
+    SqlCommand cm;
+    SqlDataReader dr;
+    string st = "";
+    string con = "";
+    public ActionResult Index()
+    {
+        return View();
+    }
+
+    public ActionResult Show(IFormCollection fc)
+    {
+        con = @"Server=DESKTOP-7145BT3\SQLEXPRESS;Database=Lcc;Integrated Security=True;TrustServerCertificate=True";
+        db = new SqlConnection();
+        if (db.State == ConnectionState.Open)
+        {
+            db.Close();
+        }
+        db.ConnectionString = con;
+        db.Open();
+        st = "select eno,ename,doj,sal from staff where eno=" + fc["En"] + "";
+        cm = new SqlCommand(st, db);
+        dr = cm.ExecuteReader();
+        if (dr.Read() == true)
+        {
+            Employee obj = new Employee();
+            obj.Eno = Convert.ToInt32(dr["eno"]);
+            obj.Ename = dr["ename"].ToString();
+            obj.Doj = Convert.ToDateTime(dr["Doj"]);
+            obj.Sal = Convert.ToInt32(dr["sal"]);
+            ViewBag.msg = "Record Shown";
+            return View(obj);
+        }
+        else
+        {
+            ViewBag.msg = "Eno Not Found";
+            return View("Index");
+        }
+
+    }
+
+    public ActionResult MyAction(string submitButton, IFormCollection f)
+ {
+
+     switch (submitButton)
+     {
+         case "Modify":
+            Modify(f);
+            ViewBag.Message = "Record Modified";
+            return View();
+        
+             case "Delete":
+             Delete(f);
+              ViewBag.Message = "Record Modified";
+             return  View();
+
+     }
+    return View();
+ }
+
+
+
+    public ActionResult Modify(IFormCollection fc)
+    {
+        con = @"Server=DESKTOP-7145BT3\SQLEXPRESS;Database=Lcc;Integrated Security=True;TrustServerCertificate=True";
+        db = new SqlConnection();
+        if (db.State == ConnectionState.Open)
+        {
+            db.Close();
+        }
+        db.ConnectionString = con;
+        db.Open();
+        st = "update staff set ename='" + fc["Ename"] + "',Doj='" + fc["Doj"] + "',Sal=" + fc["Sal"] + " where eno=" + fc["Eno"] + "";
+        cm = new SqlCommand(st, db);
+        cm.ExecuteNonQuery();
+        return View("Modify");
+    }
+
+
+    public ActionResult Delete(IFormCollection fc)
+    {
+        con = @"Server=DESKTOP-7145BT3\SQLEXPRESS;Database=Lcc;Integrated Security=True;TrustServerCertificate=True";
+        db = new SqlConnection();
+        if (db.State == ConnectionState.Open)
+        {
+            db.Close();
+        }
+        db.ConnectionString = con;
+        db.Open();
+        st = "Delete from Staff where eno=" + fc["Eno"] + "";
+        cm = new SqlCommand(st, db);
+        cm.ExecuteNonQuery();
+        return View("Delete");
+    }
+}
+
+-------------------------------------------------
+Step 5 Code In Index View 
+-------------------------------------------------
+<h2>Search Record Here</h2>
+<br />
+<b><u>@ViewBag.msg</u></b>
+<br />
+@using (Html.BeginForm("Show", "Home", FormMethod.Post))
+{
+    @Html.Label("Enter Employee No")
+    @Html.TextBox("En")
+    <br />
+    @Html.TextBox("Text", "Search", new { type = "Submit" })
+}
+
+-----------------------------------------------------
+Step 6 Code In Show View 
+-------------------------------------
+@model AdoReadUpdateDelete.Controllers.Employee
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>Details of Employee </h2>
+
+<br />
+<b><u>@ViewBag.msg</u></b>
+@using (Html.BeginForm("MyAction", "Home", FormMethod.Post))
+{
+    <table border="4" bordercolor="red">
+        <tr>
+            <th>@Html.Label("Eno")</th>
+            <td>@Html.TextBoxFor(x => x.Eno)</td>
+        </tr>
+        <tr>
+            <th>@Html.Label("Ename")</th>
+            <td>@Html.TextBoxFor(x => x.Ename)</td>
+        </tr>
+        <tr>
+            <th>@Html.Label("Doj")</th>
+            <td>@Html.TextBoxFor(x => x.Doj)</td>
+        </tr>
+        <tr>
+            <th>@Html.Label("Sal")</th>
+            <td>@Html.TextBoxFor(x => x.Sal)</td>
+        </tr>
+    </table>
+    <input type="submit" name="submitButton" value="Modify" />
+    <input type="submit" name="submitButton" value="Delete" />
+}
+-------------------------------------
+Step 7 Code In MyAction View
+--------------------------------------
+<span style="color:red"><b><u>@ViewBag.Message</u></b></span>
+<br />
+<br />
+@Html.ActionLink("GoBack","Index","Home")
